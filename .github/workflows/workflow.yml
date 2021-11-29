@@ -1,31 +1,34 @@
-#on: [pull_request]
-#
-#jobs:
-#  main:
-#    runs-on: ubuntu-latest
-#    name: Refactoring Detection
-#    steps:
-#      - name: Git Checkout
-#        uses: actions/checkout@v2
-#        with:
-#          fetch-depth: 0
-#
-#      - name: RefDiff
-#        env:
-#          LANGUAGE: Java
-#          REV_BEFORE: ${{ github.event.pull_request.base.sha }}
-#          REV_AFTER: ${{ github.event.pull_request.head.sha }}
-#        uses: rodrigo-brito/refactoring-aware-diff@action
+on: [pull_request, push]
 
-name: learn-github-actions
-on: [push, pull_request]
 jobs:
-  check-bats-version:
+  main:
     runs-on: ubuntu-latest
+    name: Refactoring Detection
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Git Checkout
+        uses: actions/checkout@v2
         with:
-          node-version: '14'
-      - run: npm install -g bats
-      - run: bats -v
+          fetch-depth: 0
+
+      - name: RefDiff
+        env:
+          LANGUAGE: Java
+          REV_BEFORE: ${{ github.event.pull_request.base.sha }}
+          REV_AFTER: ${{ github.event.pull_request.head.sha }}
+        uses: rodrigo-brito/refactoring-aware-diff@action
+  test:
+      runs-on: ubuntu-latest
+      name: Refactoring Detection
+      steps:
+        - name: Git Checkout
+          uses: actions/checkout@v2
+          with:
+            fetch-depth: 0
+
+        - name: RefDiff
+          env:
+            LANGUAGE: Java
+            REV_BEFORE: ${{ github.event.pull_request.base.sha }}
+            REV_AFTER: ${{ github.event.pull_request.head.sha }}
+          uses: rodrigo-brito/refactoring-aware-diff@action
+

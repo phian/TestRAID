@@ -18,7 +18,7 @@
 #        uses: rodrigo-brito/refactoring-aware-diff@action
 
 name: learn-github-actions
-on: [push]
+on: [push, pull_request]
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest

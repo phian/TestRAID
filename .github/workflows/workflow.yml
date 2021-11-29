@@ -17,13 +17,15 @@
 #          REV_AFTER: ${{ github.event.pull_request.head.sha }}
 #        uses: rodrigo-brito/refactoring-aware-diff@action
 
-name: Tests and Lint
-
+name: learn-github-actions
 on: [push]
-
 jobs:
-  eslint:
+  check-bats-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: stefanoeb/eslint-action@1.0.2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install -g bats
+      - run: bats -v

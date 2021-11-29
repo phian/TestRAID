@@ -1,18 +1,29 @@
-on: [pull_request]
+#on: [pull_request]
+#
+#jobs:
+#  main:
+#    runs-on: ubuntu-latest
+#    name: Refactoring Detection
+#    steps:
+#      - name: Git Checkout
+#        uses: actions/checkout@v2
+#        with:
+#          fetch-depth: 0
+#
+#      - name: RefDiff
+#        env:
+#          LANGUAGE: Java
+#          REV_BEFORE: ${{ github.event.pull_request.base.sha }}
+#          REV_AFTER: ${{ github.event.pull_request.head.sha }}
+#        uses: rodrigo-brito/refactoring-aware-diff@action
+
+name: Tests and Lint
+
+on: [push]
 
 jobs:
-  main:
+  eslint:
     runs-on: ubuntu-latest
-    name: Refactoring Detection
     steps:
-      - name: Git Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: RefDiff
-        env:
-          LANGUAGE: Java
-          REV_BEFORE: ${{ github.event.pull_request.base.sha }}
-          REV_AFTER: ${{ github.event.pull_request.head.sha }}
-        uses: rodrigo-brito/refactoring-aware-diff@action
+      - uses: actions/checkout@v1
+      - uses: stefanoeb/eslint-action@1.0.2
